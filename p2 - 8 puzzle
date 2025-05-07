@@ -1,0 +1,66 @@
+import heapq
+
+goal = [[1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 0]]  # Goal state (0 is blank)
+# Calculate Manhattan Distance
+def heuristic(state):
+    dist = 0
+    for i in range(3):
+        for j in range(3):
+            val = state[i][j]
+            if val != 0:
+                x, y = divmod(val - 1, 3)
+                dist += abs(i - x) + abs(j - y)
+    return dist
+# Get blank (0) position
+def find_blank(state):
+    for i in range(3):
+        for j in range(3):
+            if state[i][j] == 0:
+                return i, j
+
+# Move the blank tile in all 4 directions
+def get_moves(state):
+    moves = []
+    x, y = find_blank(state)
+    directions = [(-1,0), (1,0), (0,-1), (0,1)]  # Up, Down, Left, Right
+    for dx, dy in directions:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < 3 and 0 <= ny < 3:
+            new = [row[:] for row in state]
+            new[x][y], new[nx][ny] = new[nx][ny], new[x][y]
+            moves.append(new)
+    return moves
+
+# A* Search
+def solve(start):
+    heap = [(heuristic(start), 0, start, [])]
+    visited = set()
+    while heap:
+        _, cost, state, path = heapq.heappop(heap)
+        key = str(state)
+        if key in visited:
+            continue
+        visited.add(key)
+        if state == goal:
+            return path + [state]
+        for move in get_moves(state):
+            heapq.heappush(heap, (cost + 1 + heuristic(move), cost + 1, move, path + [state]))
+    return None
+# Print solution steps
+def show(path):
+    for step in path:
+        for row in step:
+            print(row)
+        print("-----")
+# Example start state
+start = [[1, 2, 3],
+         [4, 0, 6],
+         [7, 5, 8]]
+solution = solve(start)
+if solution:
+    print("Solved in", len(solution) - 1, "moves.")
+    show(solution)
+else:
+    print("No solution found.")
