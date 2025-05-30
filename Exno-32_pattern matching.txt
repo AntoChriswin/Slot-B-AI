@@ -1,0 +1,13 @@
+% match(Pattern, Target) succeeds if Pattern matches the Target list
+
+% Base Case: Empty pattern matches empty list
+match([], []).
+
+% Recursive Case: Head of pattern matches head of list, rest matches recursively
+match([H1|T1], [H2|T2]) :-
+    H1 = H2,
+    match(T1, T2).
+
+% Example with variables:
+% match([X, b, X], [a, b, a]) will succeed with X = a
+% match([X, b, X], [a, b, c]) will fail (a ≠ c)

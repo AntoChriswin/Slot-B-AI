@@ -1,0 +1,8 @@
+born(ashritha, 26,10,2006).
+born(lavanya, 09,01,2006).
+born(teja, 22,02,2006).
+born(nikhila, 01,12,2005).
+born(harshi, 19,12,2005).
+born(mallika, 02,03,2006).
+born(parthu, 21,06,2005).
+born(ramana, 29,12,2005).

@@ -1,0 +1,22 @@
+% vowel(Char) is true if Char is a vowel
+vowel(a).
+vowel(e).
+vowel(i).
+vowel(o).
+vowel(u).
+
+% count_vowels(InputList, Count) counts the number of vowels in InputList
+
+% Base case: empty list has 0 vowels
+count_vowels([], 0).
+
+% If head is a vowel, increment count and recurse
+count_vowels([H|T], Count) :-
+    vowel(H),
+    count_vowels(T, RestCount),
+    Count is RestCount + 1.
+
+% If head is not a vowel, skip it and recurse
+count_vowels([H|T], Count) :-
+    \+ vowel(H),
+    count_vowels(T, Count).
